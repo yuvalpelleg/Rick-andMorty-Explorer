@@ -51,8 +51,21 @@ function updateUI(characterArr) {
     characterInfo.classList.add("character-info");
     characterCard.appendChild(characterInfo);
     // now filling in the information
-  });
+    // Character Name
+    const nameElem = document.createElement("h2");
+    nameElem.textContent = character.name;
+    characterInfo.appendChild(nameElem);
 
+    // Status and Species
+    const statusSpeciesElem = document.createElement("p");
+    statusSpeciesElem.textContent = `${character.status} - ${character.species}`;
+    characterInfo.appendChild(statusSpeciesElem);
+
+    // Location
+    const locationElem = document.createElement("p");
+    locationElem.textContent = `Location: ${character.location.name}`;
+    characterInfo.appendChild(locationElem);
+  });
   //    - Make the card clickable (link to character-detail.html)
   // 4. Update pagination UI
   // throw new Error("updateUI not implemented");
