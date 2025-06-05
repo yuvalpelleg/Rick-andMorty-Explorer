@@ -7,6 +7,13 @@
  * Loads and displays details for a specific character
  * @param {string} id - The character ID to load
  */
+const searchHolder = new URLSearchParams(window.location.search);
+const characterID = searchHolder.get("id");
+const loadAPI = `https://rickandmortyapi.com/api/character/${characterID}`;
+fetch(loadAPI)
+  .then((response) => response.json())
+  .then((data) => updateUI(data));
+
 function loadCharacterDetails(id) {
   const container = document.querySelector("#episode-detail");
   const loader = createLoader(); // assumes createLoader() is defined in utils.js
@@ -21,20 +28,51 @@ function loadCharacterDetails(id) {
   // 7. Hide loading state
   throw new Error("loadCharacterDetails not implemented");
 }
+function getLocationId(url) {
+  if (!url) return null;
+  const splitArr = url.split("/");
+  return splitArr.pop();
+}
 
-/**
- * Updates the UI with character and episode data
- * @param {Object} character - The character data
- * @param {Array} episodes - Array of episode data
- */
 function updateUI(character, episodes) {
-  // TODO: Implement the UI update
-  // 1. Get the detail container element
-  // 2. Create character header with image and basic info
-  // 3. Add links to origin and current location
+  const grid = document.getElementById("details-grid");
+
+  // Origin
+  let originLink;
+  if (character.origin.url && character.origin.name !== "unknown") {
+    const originId = getLocationId(character.origin.url);
+    originLink = `<a href="location-detail.html?id=${originId}">${character.origin.name}</a>`;
+  } else {
+    originLink = character.origin.name;
+  }
+
+  // Location
+  let locationLink;
+  if (character.location.url && character.location.name !== "unknown") {
+    const locationId = getLocationId(character.location.url);
+    locationLink = `<a href="location-detail.html?id=${locationId}">${character.location.name}</a>`;
+  } else {
+    locationLink = character.location.name;
+  }
+
+  grid.innerHTML = `
+    <div class="card character-card">
+      <div class="img character-img">
+        <img src="${character.image}" alt="${character.name}">
+      </div>
+      <div class="info character-info">
+        <h2>${character.name}</h2>
+        <p>Status: ${character.status}</p>
+        <p>Species: ${character.species}</p>
+        <p>Gender: ${character.gender}</p>
+        <p>Origin: ${originLink}</p>
+        <p>Location: ${locationLink}</p>
+      </div>
+    </div>
+  `;
   // 4. Create episodes section with all episodes the character appears in
   // 5. Handle empty states and errors
-  throw new Error("updateUI not implemented");
+  // throw new Error("updateUI not implemented");
 }
 
 // TODO: Initialize the page

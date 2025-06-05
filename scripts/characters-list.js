@@ -35,6 +35,7 @@ function updateUI(characterArr) {
     characterCard.classList.add("card");
     characterCard.classList.add("character-card");
     grid.appendChild(characterCard);
+
     //image- creating the div, adding the classes and appending.
     const characterIMG = document.createElement("div");
     characterIMG.classList.add("img");
@@ -44,6 +45,7 @@ function updateUI(characterArr) {
     const profileImage = document.createElement("img");
     profileImage.src = character.image;
     characterIMG.appendChild(profileImage);
+
     // info- name, status, species, location
     // first creating the div for the information
     const characterInfo = document.createElement("div");
@@ -55,18 +57,22 @@ function updateUI(characterArr) {
     const nameElem = document.createElement("h2");
     nameElem.textContent = character.name;
     characterInfo.appendChild(nameElem);
-
     // Status and Species
     const statusSpeciesElem = document.createElement("p");
     statusSpeciesElem.textContent = `${character.status} - ${character.species}`;
     characterInfo.appendChild(statusSpeciesElem);
-
     // Location
     const locationElem = document.createElement("p");
     locationElem.textContent = `Location: ${character.location.name}`;
     characterInfo.appendChild(locationElem);
+
+    //    - Make the card clickable (link to character-detail.html)
+    characterCard.style.cursor = "pointer";
+    characterCard.addEventListener("click", () => {
+      window.location.href = `character-detail.html?id=${character.id}`;
+    });
   });
-  //    - Make the card clickable (link to character-detail.html)
+
   // 4. Update pagination UI
   // throw new Error("updateUI not implemented");
 }
