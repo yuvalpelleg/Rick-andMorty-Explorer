@@ -77,7 +77,7 @@ Create a web application that displays information about the Rick and Morty TV s
 │   └── episode-detail.html
 ├── scripts/
 │   ├── modules/
-│   │   ├── api.js (API interaction)
+│   │
 │   │   └── utils.js (helper functions)
 │   ├── characters.js
 │   ├── locations.js
