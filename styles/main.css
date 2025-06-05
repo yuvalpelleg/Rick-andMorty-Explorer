@@ -34,3 +34,12 @@ a {
 a {
   text-decoration: none;
 }
+
+.app {
+  display: grid;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
