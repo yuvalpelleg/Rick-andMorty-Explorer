@@ -33,6 +33,11 @@ function updateUI(data) {
  * Loads episode data from the API
  */
 function loadEpisodes() {
+  // const grid = document.querySelector("#episode-grid");
+  // grid.innerHTML = ""; // clear old content
+  // const loader = createLoader(); // get spinner
+  // grid.appendChild(loader); // show spinner
+
   // TODO: Implement episode loading
   // 1. Show loading state
   // 2. Fetch episode data using the API module

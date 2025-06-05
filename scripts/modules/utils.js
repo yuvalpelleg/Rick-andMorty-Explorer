@@ -9,10 +9,36 @@
  * @returns {Function} The debounced function
  */
 export function debounce(func, wait) {
-  // TODO: Implement the debounce function
-  // 1. Create a variable to store the timeout ID
-  // 2. Return a function that wraps the original function
-  // 3. Clear the existing timeout if the function is called again
-  // 4. Set a new timeout to call the function after the wait period
-  throw new Error("debounce not implemented");
+  let timeID = undefined;
+
+  if (!func) {
+    throw new Error("debounce not implemented");
+  }
+
+  return function (...args) {
+    if (timeID) {
+      clearTimeout(timeID);
+    }
+    timeID = setTimeout(() => {
+      fn(...args);
+    }, wait);
+  };
+}
+
+/**
+ * Extracts the numeric ID from a given Rick and Morty API URL
+ * Example: "https://rickandmortyapi.com/api/character/42" → "42"
+ * @param {string} url - The API URL
+ * @returns {string} The extracted ID
+ */
+export function getIdFromUrl(url) {
+  const parts = url.split("/");
+  return parts[parts.length - 1];
+}
+
+export function createLoader() {
+  const loader = document.createElement("div");
+  loader.className = "loader";
+  loader.textContent = "Loading...";
+  return loader;
 }

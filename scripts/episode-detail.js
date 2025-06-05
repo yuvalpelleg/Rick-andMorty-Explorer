@@ -8,6 +8,48 @@
  * @param {string} id - The episode ID to load
  */
 function loadEpisodeDetails(id) {
+  const container = document.querySelector("#episode-detail");
+  const loader = createLoader();
+  container.appendChild(loader);
+
+  fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Failed to fetch episode");
+      }
+      return res.json();
+    })
+    .then((episode) => {
+      // Work with the episode here
+      console.log(episode);
+    })
+    .catch((error) => {
+      showError("Episode not found");
+    });
+
+  const characterUrls = episode.characters;
+  const characterIds = characterUrls.map((url) => getIdFromUrl(url));
+
+  return fetch(`https://rickandmortyapi.com/api/character/${idsString}`)
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("Failed to fetch characters");
+    }
+    return res.json();
+  })
+  .then(data => {
+    let characters = Array.isArray(data) ? data : [data];
+    // Step 5: Update UI
+    updateUI(episode, characters);
+    loader.remove(); // Step 7: Hide loading
+  });
+})
+.catch(error => {
+// Step 6: Handle errors
+loader.remove();
+showError(error.message || "Something went wrong");
+});
+
   // TODO: Implement episode detail loading
   // 1. Show loading state
   // 2. Fetch episode data using the API module
@@ -16,6 +58,7 @@ function loadEpisodeDetails(id) {
   // 5. Update UI with episode and character data
   // 6. Handle any errors
   // 7. Hide loading state
+
   throw new Error("loadEpisodeDetails not implemented");
 }
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Episodes | Rick and Morty Explorer</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Episodes</h1>
+      <input type="text" id="search-input" placeholder="Search episodes..." />
+    </header>
+
+    <main>
+      <section id="episode-grid" class="grid">
+        <!-- Episode cards will be inserted here -->
+      </section>
+
+      <div class="pagination">
+        <button id="prev-btn">Previous</button>
+        <span id="page-indicator">Page 1</span>
+        <button id="next-btn">Next</button>
+      </div>
+    </main>
+
+    <script type="module" src="../scripts/episodes-list.js"></script>
+  </body>
+</html>

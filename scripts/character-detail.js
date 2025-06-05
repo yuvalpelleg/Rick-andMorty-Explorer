@@ -8,6 +8,9 @@
  * @param {string} id - The character ID to load
  */
 function loadCharacterDetails(id) {
+  const container = document.querySelector("#episode-detail");
+  const loader = createLoader(); // assumes createLoader() is defined in utils.js
+  container.appendChild(loader);
   // TODO: Implement character detail loading
   // 1. Show loading state
   // 2. Fetch character data using the API module
