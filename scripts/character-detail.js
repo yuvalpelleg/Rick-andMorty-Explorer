@@ -10,9 +10,32 @@
 const searchHolder = new URLSearchParams(window.location.search);
 const characterID = searchHolder.get("id");
 const loadAPI = `https://rickandmortyapi.com/api/character/${characterID}`;
+// Fetch character data
 fetch(loadAPI)
   .then((response) => response.json())
-  .then((data) => updateUI(data));
+  .then((character) => {
+    // 1. Extract episode IDs from character.episode URLs
+    const episodeUrls = character.episode;
+    const episodeIds = episodeUrls.map((url) => url.split("/").pop());
+
+    // 2. Fetch all episodes this character appears in
+    fetch(`https://rickandmortyapi.com/api/episode/${episodeIds.join(",")}`)
+      .then((response) => response.json())
+      .then((episodesData) => {
+        // If only one episode, API returns an object, not an array
+        const episodes = Array.isArray(episodesData)
+          ? episodesData
+          : [episodesData];
+        updateUI(character, episodes);
+      });
+  });
+
+// Helper to extract location id
+function getLocationId(url) {
+  if (!url) return null;
+  const splitArr = url.split("/");
+  return splitArr.pop();
+}
 
 function loadCharacterDetails(id) {
   const container = document.querySelector("#episode-detail");
@@ -26,14 +49,8 @@ function loadCharacterDetails(id) {
   // 5. Update UI with character and episode data
   // 6. Handle any errors
   // 7. Hide loading state
-  throw new Error("loadCharacterDetails not implemented");
+  // throw new Error("loadCharacterDetails not implemented");
 }
-function getLocationId(url) {
-  if (!url) return null;
-  const splitArr = url.split("/");
-  return splitArr.pop();
-}
-
 function updateUI(character, episodes) {
   const grid = document.getElementById("details-grid");
 
@@ -55,6 +72,19 @@ function updateUI(character, episodes) {
     locationLink = character.location.name;
   }
 
+  // Episodes scroll bar (no need for empty check)
+  let episodesHTML = '<div class="episodes-scroll-bar">';
+  episodes.forEach((ep) => {
+    episodesHTML += `
+    <div class="episode-card">
+      <strong>${ep.episode}</strong><br>
+      ${ep.name}<br>
+      <small>${ep.air_date}</small>
+    </div>
+  `;
+  });
+  episodesHTML += "</div>";
+
   grid.innerHTML = `
     <div class="card character-card">
       <div class="img character-img">
@@ -67,6 +97,8 @@ function updateUI(character, episodes) {
         <p>Gender: ${character.gender}</p>
         <p>Origin: ${originLink}</p>
         <p>Location: ${locationLink}</p>
+        <h3>Episodes</h3>
+        ${episodesHTML}
       </div>
     </div>
   `;
