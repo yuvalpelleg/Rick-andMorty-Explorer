@@ -70,3 +70,15 @@ a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
+
+#pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#pagination button.active-page {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}

@@ -16,10 +16,6 @@ const state = {
  * @param {Array} data.results - Array of character objects
  * @param {Object} data.info - Pagination information
  */
-const loadAPI = "https://rickandmortyapi.com/api/character";
-fetch(loadAPI)
-  .then((response) => response.json())
-  .then((data) => updateUI(data.results));
 
 function updateUI(characterArr) {
   // TODO: Implement the UI update
@@ -76,7 +72,30 @@ function updateUI(characterArr) {
   // 4. Update pagination UI
   // throw new Error("updateUI not implemented");
 }
+function updatePagination(info) {
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
 
+  // Create a button for each page
+  for (let i = 1; i <= info.pages; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+
+    // Highlight current page
+    if (i === state.page) {
+      btn.disabled = true;
+      btn.classList.add("active-page");
+    }
+
+    // Update state and reload on click
+    btn.addEventListener("click", () => {
+      state.page = i;
+      loadCharacters();
+    });
+
+    pagination.appendChild(btn);
+  }
+}
 /**
  * Loads character data from the API
  */
@@ -87,9 +106,19 @@ function loadCharacters() {
   // 3. Update UI with the results
   // 4. Handle any errors
   // 5. Hide loading state
-  throw new Error("loadCharacters not implemented");
-}
 
+  const url = `https://rickandmortyapi.com/api/character?page=${state.page}`;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      state.data = data;
+      updateUI(data.results);
+      updatePagination(data.info);
+    });
+  // throw new Error("loadCharacters not implemented");
+}
+loadCharacters();
 // TODO: Add event listeners
 // 1. Previous page button click
 // 2. Next page button click
