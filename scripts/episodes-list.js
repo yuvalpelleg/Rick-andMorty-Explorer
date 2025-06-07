@@ -96,6 +96,10 @@ function loadEpisodes() {
       state.data = data;
       updateUI(data.results);
       updatePagination(data.info);
+    })
+    .catch((error) => {
+      grid.innerHTML = `<p class="error">Failed to load episodes. Please try again later.</p>`;
+      console.error("Fetch error:", error);
     });
 }
 
