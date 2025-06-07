@@ -2,23 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Episodes | Rick and Morty Explorer</title>
+    <title>Episodes List</title>
     <link rel="stylesheet" href="../styles/main.css" />
   </head>
   <body>
-    <header>
-      <h1>Episodes</h1>
-      <input type="text" id="search-input" placeholder="Search episodes..." />
-    </header>
+    <h1>Rick and Morty Episodes</h1>
 
-    <main>
-      <div class="app" id="episodes-grid">
-        <!-- Episode cards will be inserted here -->
-      </div>
-      <div id="pagination" class="pagination-container"></div>
-    </main>
+    <input type="text" id="search" placeholder="Search for episode..." />
 
-    <script type="module" src="../scripts/episodes-list.js"></script>
+    <div id="episodes-grid" class="grid">
+      <!-- episode cards will be added here -->
+    </div>
+
+    <div id="pagination">
+      <button id="prev-page">Prev</button>
+      <button id="next-page">Next</button>
+    </div>
+
+    <script type="module" src="../scripts/episodes.js"></script>
   </body>
 </html>
