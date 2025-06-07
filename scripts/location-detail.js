@@ -79,14 +79,15 @@ function updateUI(location, residents) {
   container.appendChild(dimension);
 
   // Residents Section
-  const residentsSection = document.createElement("div");
-  residentsSection.className = "residents-grid";
-
   if (residents.length === 0) {
     const msg = document.createElement("p");
     msg.textContent = "No residents in this location.";
     container.appendChild(msg);
   } else {
+    // Horizontal scroll container
+    const scrollRow = document.createElement("div");
+    scrollRow.className = "residents-scroll-row";
+
     residents.forEach((char) => {
       const card = document.createElement("div");
       card.className = "card character-card";
@@ -114,8 +115,8 @@ function updateUI(location, residents) {
         window.location.href = `character-detail.html?id=${char.id}`;
       });
 
-      residentsSection.appendChild(card);
+      scrollRow.appendChild(card);
     });
-    container.appendChild(residentsSection);
+    container.appendChild(scrollRow);
   }
 }

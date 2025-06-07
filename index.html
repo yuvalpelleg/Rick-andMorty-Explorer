@@ -3,10 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;url=pages/characters.html" />
     <title>Rick and Morty Explorer</title>
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
-  <body>
-    <p>Redirecting to <a href="pages/characters.html">Characters page</a>...</p>
+  <body class="index-bg">
+    <nav class="main-nav">
+      <ul>
+        <span class="logo-title">RickyWiki</span>
+        <li><a href="pages/characters.html">Characters</a></li>
+        <li><a href="pages/episodes.html">Episodes</a></li>
+        <li><a href="pages/locations.html">Locations</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h1>Welcome to the Rick and Morty Explorer</h1>
+      <p>
+        Choose a section from the navigation above to explore characters,
+        episodes, or locations.
+      </p>
+      <div class="section-buttons">
+        <a href="pages/characters.html" class="section-btn">Character List</a>
+        <a href="pages/episodes.html" class="section-btn">Episode List</a>
+        <a href="pages/locations.html" class="section-btn">Location List</a>
+      </div>
+    </main>
+    <footer class="main-footer">
+      <p>
+        &copy; 2025 Rick and Morty Explorer &mdash; Powered by
+        <a href="https://rickandmortyapi.com/" target="_blank"
+          >The Rick and Morty API</a
+        >
+      </p>
+    </footer>
   </body>
 </html>

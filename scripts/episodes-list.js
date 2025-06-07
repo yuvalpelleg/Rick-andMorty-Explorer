@@ -20,34 +20,49 @@ const state = {
 function updateUI(episodeArr) {
   const grid = document.getElementById("episodes-grid");
   grid.innerHTML = "";
+  if (!Array.isArray(episodeArr) || episodeArr.length === 0) {
+    grid.innerHTML = "<p>No episodes found.</p>";
+    return;
+  }
   episodeArr.forEach((episode) => {
+    // Card container styled like character cards
     const episodeCard = document.createElement("div");
     episodeCard.classList.add("card", "episode-card");
-    grid.appendChild(episodeCard);
+    episodeCard.style.cursor = "pointer";
 
-    const nameElem = document.createElement("h3");
+    // Info section (like character-info)
+    const episodeInfo = document.createElement("div");
+    episodeInfo.classList.add("info", "episode-info");
+
+    // Name
+    const nameElem = document.createElement("h2");
     nameElem.textContent = episode.name;
-    episodeCard.appendChild(nameElem);
+    episodeInfo.appendChild(nameElem);
 
+    // Episode code
     const codeElem = document.createElement("p");
-    codeElem.textContent = `Episode Code: ${episode.episode}`;
-    episodeCard.appendChild(codeElem);
+    codeElem.textContent = `Episode: ${episode.episode}`;
+    episodeInfo.appendChild(codeElem);
 
+    // Air date
     const airDateElem = document.createElement("p");
     airDateElem.textContent = `Air Date: ${episode.air_date}`;
-    episodeCard.appendChild(airDateElem);
+    episodeInfo.appendChild(airDateElem);
 
+    // Character count
     const charCountElem = document.createElement("p");
-    charCountElem.textContent = `Character Count: ${episode.characters.length}`;
-    episodeCard.appendChild(charCountElem);
+    charCountElem.textContent = `Characters: ${episode.characters.length}`;
+    episodeInfo.appendChild(charCountElem);
+
+    episodeCard.appendChild(episodeInfo);
 
     // Make the card clickable (link to episode-detail.html)
-    episodeCard.style.cursor = "pointer";
     episodeCard.addEventListener("click", () => {
       window.location.href = `episode-detail.html?id=${episode.id}`;
     });
-  });
 
+    grid.appendChild(episodeCard);
+  });
   // TODO: Implement the UI update
   // 1. Get the grid element
   // 2. Clear existing content
