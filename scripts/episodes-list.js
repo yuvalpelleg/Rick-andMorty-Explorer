@@ -17,32 +17,35 @@ const state = {
  * @param {Object} data.info - Pagination information
  
  */
-function updateUI(data) {
-  const grid = document.querySelector("#episodes-grid"); //Find the grid element in the HTML
-  grid.innerHTML = ""; //empty the old episodes and new ones are fetched
+function updateUI(episodeArr) {
+  const grid = document.getElementById("episodes-grid");
+  grid.innerHTML = "";
+  episodeArr.forEach((episode) => {
+    const episodeCard = document.createElement("div");
+    episodeCard.classList.add("card", "episode-card");
+    grid.appendChild(episodeCard);
 
-  data.results.forEach((episode) => {
-    const card = document.createElement("div"); //create card element
-    card.classList.add("card");
+    const nameElem = document.createElement("h3");
+    nameElem.textContent = episode.name;
+    episodeCard.appendChild(nameElem);
 
-    const name = document.createElement("h3"); //create episode name element
-    name.textContent = episode.ep_name;
+    const codeElem = document.createElement("p");
+    codeElem.textContent = `Episode Code: ${episode.episode}`;
+    episodeCard.appendChild(codeElem);
 
-    const airDate = document.createElement("p"); //create air date element
-    airDate.textContent = `Air Date: ${episode.air_date}`;
+    const airDateElem = document.createElement("p");
+    airDateElem.textContent = `Air Date: ${episode.air_date}`;
+    episodeCard.appendChild(airDateElem);
 
-    const code = document.createElement("p"); //create code element
-    code.textContent = `Episode Code: ${episode.ep_code}`;
+    const charCountElem = document.createElement("p");
+    charCountElem.textContent = `Character Count: ${episode.characters.length}`;
+    episodeCard.appendChild(charCountElem);
 
-    const charCount = document.createElement("p"); //create character count element
-    charCount.textContent = `Character Count: ${episode.char_count}`;
-
-    const link = document.createElement("a"); //makes the card clickable
-    link.href = `episode-detail.html?id=${episode.id}`; //link to episode-detail
-    link.textContent = "View Details"; //text when hovering over the card
-
-    card.append(name, code, airDate, charCount, link); //appends the elements into the card element
-    grid.appendChild(card); //displays the card in the episodes list
+    // Make the card clickable (link to episode-detail.html)
+    episodeCard.style.cursor = "pointer";
+    episodeCard.addEventListener("click", () => {
+      window.location.href = `episode-detail.html?id=${episode.id}`;
+    });
   });
 
   // TODO: Implement the UI update
@@ -53,61 +56,70 @@ function updateUI(data) {
   //    - Add episode name, air date, episode code, and character count
   //    - Make the card clickable (link to episode-detail.html)
   // 4. Update pagination UI
-  throw new Error("updateUI not implemented");
+  //   throw new Error("updateUI not implemented");
+}
+
+function updatePagination(info) {
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  for (let i = 1; i <= info.pages; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    if (i === state.page) {
+      btn.disabled = true;
+      btn.classList.add("active-page");
+    }
+    btn.addEventListener("click", () => {
+      state.page = i;
+      loadEpisodes();
+    });
+    pagination.appendChild(btn);
+  }
 }
 
 /**
  * Loads episode data from the API
  */
 function loadEpisodes() {
-  const grid = document.querySelector("#episodes-grid");
-  grid.innerHTML = "";
-  const loader = createLoader();
-  grid.appendChild(loader);
+  const grid = document.getElementById("episodes-grid");
+  grid.innerHTML = "<p>Loading...</p>";
 
   let url = `https://rickandmortyapi.com/api/episode?page=${state.page}`;
   if (state.search) {
-    url += `&name=${state.search}`;
+    url += `&name=${encodeURIComponent(state.search)}`;
   }
 
   fetch(url)
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to load episodes");
-      return res.json();
-    })
+    .then((response) => response.json())
     .then((data) => {
       state.data = data;
-      updateUI(data);
-    })
-    .catch((err) => {
-      showError("Episodes could not be loaded.");
-    })
-    .finally(() => {
-      loader.remove();
+      updateUI(data.results);
+      updatePagination(data.info);
     });
 }
 
-// Event Listeners
-document.querySelector("#prev-page").addEventListener("click", () => {
-  if (state.page > 1) {
-    state.page--;
-    loadEpisodes();
-  }
-});
+// // Event Listeners
+// document.querySelector("#prev-page").addEventListener("click", () => {
+//   if (state.page > 1) {
+//     state.page--;
+//     loadEpisodes();
+//   }
+// });
 
-document.querySelector("#next-page").addEventListener("click", () => {
-  state.page++;
-  loadEpisodes();
-});
+// document.querySelector("#next-page").addEventListener("click", () => {
+//   state.page++;
+//   loadEpisodes();
+// });
 
-document.querySelector("#search").addEventListener(
-  "input",
-  debounce((e) => {
-    state.search = e.target.value.trim();
-    state.page = 1;
-    loadEpisodes();
-  }, 500)
-);
+// document.querySelector("#search").addEventListener(
+//   "input",
+//   debounce((e) => {
+//     state.search = e.target.value.trim();
+//     state.page = 1;
+//     loadEpisodes();
+//   }, 500)
+// );
 
 // Initial Load
 loadEpisodes();
