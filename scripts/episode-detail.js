@@ -128,7 +128,7 @@ function updateUI(episode, characters) {
   const container = document.querySelector("#episode-detail");
   container.innerHTML = ""; // Clear any old content
 
-  // Create a header element for episode information
+  // 2. Create episode header with basic info
   const header = document.createElement("div");
   header.className = "episode-header";
 
@@ -144,43 +144,44 @@ function updateUI(episode, characters) {
 
   // Append all to the header
   header.append(title, airDate, code);
+  container.append(header);
 
-  // Create a grid for the characters
-  const grid = document.createElement("div");
-  grid.className = "character-grid";
+  // 3. Create characters section
+  const sectionTitle = document.createElement("h3");
+  sectionTitle.textContent = "Characters in this episode";
+  container.append(sectionTitle);
 
-  // If there are characters, create cards for them
-  if (characters.length > 0) {
-    characters.forEach((char) => {
-      const card = document.createElement("a");
-      card.className = "card";
-      card.href = `character-detail.html?id=${char.id}`;
+  // Use a horizontal scroll bar for characters, like in character details
+  const scrollBar = document.createElement("div");
+  scrollBar.className = "episodes-scroll-bar";
 
-      const img = document.createElement("img");
-      img.src = char.image;
-      img.alt = `${char.name} image`;
+  // 4. For each character:
+  characters.forEach((char) => {
+    //    - Create a card with image and basic info
+    //    - Make the card link to the character detail page
+    const card = document.createElement("a");
+    card.className = "card character-card";
+    card.href = `character-detail.html?id=${char.id}`;
 
-      const name = document.createElement("h3");
-      name.textContent = char.name;
+    const img = document.createElement("img");
+    img.src = char.image;
+    img.alt = `${char.name} image`;
 
-      const species = document.createElement("p");
-      species.textContent = `Species: ${char.species}`;
+    const name = document.createElement("h3");
+    name.textContent = char.name;
 
-      const status = document.createElement("p");
-      status.textContent = `Status: ${char.status}`;
+    const species = document.createElement("p");
+    species.textContent = `Species: ${char.species}`;
 
-      card.append(img, name, species, status);
-      grid.appendChild(card);
-    });
-  } else {
-    // If no characters found, show a message
-    const empty = document.createElement("p");
-    empty.textContent = "No characters found in this episode.";
-    grid.appendChild(empty);
-  }
+    const status = document.createElement("p");
+    status.textContent = `Status: ${char.status}`;
 
-  // Add the header and the grid to the page
-  container.append(header, grid);
+    card.append(img, name, species, status);
+    scrollBar.appendChild(card);
+  });
+
+  // Add the scroll bar to the page
+  container.append(scrollBar);
 }
 
 // Initialize the page
