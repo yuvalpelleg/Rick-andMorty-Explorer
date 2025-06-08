@@ -98,6 +98,16 @@ a {
   text-align: center;
 }
 
+#pagination {
+  margin-left: 1.5rem; /* Adjust as needed */
+  margin-top: 1.5rem; /* Optional: space above */
+  margin-bottom: 1.5rem;
+}
+
+#pagination > * + * {
+  margin-top: 1rem; /* Adjust as needed for spacing between rows */
+}
+
 #pagination button {
   margin: 0 5px;
   padding: 5px 10px;
