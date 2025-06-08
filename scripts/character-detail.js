@@ -76,11 +76,11 @@ function updateUI(character, episodes) {
   let episodesHTML = '<div class="episodes-scroll-bar">';
   episodes.forEach((ep) => {
     episodesHTML += `
-    <div class="episode-card">
+    <a href="episode-detail.html?id=${ep.id}" class="episode-card">
       <strong>${ep.episode}</strong><br>
       ${ep.name}<br>
       <small>${ep.air_date}</small>
-    </div>
+    </a>
   `;
   });
   episodesHTML += "</div>";
