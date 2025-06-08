@@ -99,13 +99,17 @@ a {
 }
 
 #pagination {
-  margin-left: 1.5rem; /* Adjust as needed */
+  margin-left: 1.5rem;
   margin-top: 1.5rem; /* Optional: space above */
   margin-bottom: 1.5rem;
 }
-
-#pagination > * + * {
-  margin-top: 1rem; /* Adjust as needed for spacing between rows */
+#pagination button {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 #pagination button {
