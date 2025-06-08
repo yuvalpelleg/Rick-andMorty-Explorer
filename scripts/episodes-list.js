@@ -36,7 +36,7 @@ function updateUI(episodeArr) {
   episodeArr.forEach((episode) => {
     // Card container styled like character cards
     const episodeCard = document.createElement("div");
-    episodeCard.classList.add("card", "episode-card");
+    episodeCard.classList.add("card");
     episodeCard.style.cursor = "pointer";
 
     // Info section (like character-info)
