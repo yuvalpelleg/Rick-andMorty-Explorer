@@ -84,7 +84,7 @@ function updatePagination(info) {
     // Highlight current page
     if (i === state.page) {
       btn.disabled = true;
-      btn.classList.add("active-page");
+      btn.classList.toggle("active-page");
     }
 
     // Update state and reload on click
