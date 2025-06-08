@@ -72,7 +72,7 @@ function updateUI(character, episodes) {
     locationLink = character.location.name;
   }
 
-  // Episodes scroll bar (no need for empty check)
+  // Episodes scroll bar
   let episodesHTML = '<div class="episodes-scroll-bar">';
   episodes.forEach((ep) => {
     episodesHTML += `
