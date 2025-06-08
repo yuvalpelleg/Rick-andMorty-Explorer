@@ -9,7 +9,15 @@ const state = {
   data: null,
   search: "",
 };
-
+//debounce function to limit the number of API calls
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+}
 /**
  * Updates the UI with character data
  * @param {Object} data - The character data from the API
@@ -107,7 +115,10 @@ function loadCharacters() {
   // 4. Handle any errors
   // 5. Hide loading state
 
-  const url = `https://rickandmortyapi.com/api/character?page=${state.page}`;
+  //added a way to search for characters
+  const url =
+    `https://rickandmortyapi.com/api/character?page=${state.page}` +
+    (state.search ? `&name=${encodeURIComponent(state.search)}` : "");
 
   fetch(url)
     .then((response) => response.json())
@@ -118,6 +129,18 @@ function loadCharacters() {
     });
   // throw new Error("loadCharacters not implemented");
 }
+
+//event listiner for a search input
+const searchInput = document.getElementById("search");
+searchInput.addEventListener(
+  "input",
+  debounce(function () {
+    state.search = this.value;
+    state.page = 1; // Reset to first page on new search
+    loadCharacters();
+  }, 300)
+);
+
 loadCharacters();
 // TODO: Add event listeners
 // 1. Previous page button click

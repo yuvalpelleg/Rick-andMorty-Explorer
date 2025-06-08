@@ -10,6 +10,16 @@ const state = {
   search: "",
 };
 
+//debounce function to limit the number of API calls
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+}
+
 /**
  * Updates the UI with location data
  * @param {Array} locations - Array of location objects
@@ -67,10 +77,9 @@ function loadLocations() {
   grid.innerHTML = "<p>Loading...</p>";
 
   // 2. Fetch location data using the API module
-  let url = `https://rickandmortyapi.com/api/location?page=${state.page}`;
-  if (state.search) {
-    url += `&name=${encodeURIComponent(state.search)}`;
-  }
+  let url =
+    `https://rickandmortyapi.com/api/location?page=${state.page}` +
+    (state.search ? `&name=${encodeURIComponent(state.search)}` : "");
 
   fetch(url)
     .then((response) => {
@@ -119,6 +128,16 @@ function updatePagination(info) {
     pagination.appendChild(btn);
   }
 }
+// Debounced search event listener for locations
+const searchInput = document.getElementById("search");
+searchInput.addEventListener(
+  "input",
+  debounce(function () {
+    state.search = this.value.trim();
+    state.page = 1;
+    loadLocations();
+  }, 300)
+);
 
 // 4. Call loadLocations() on page load
 loadLocations();

@@ -10,6 +10,15 @@ const state = {
   search: "",
 };
 
+//debounce function to limit the number of API calls
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+}
 /**
  * Updates the UI with episode data
  * @param {Object} data - The episode data from the API
@@ -100,10 +109,9 @@ function loadEpisodes() {
   const grid = document.getElementById("episodes-grid");
   grid.innerHTML = "<p>Loading...</p>";
 
-  let url = `https://rickandmortyapi.com/api/episode?page=${state.page}`;
-  if (state.search) {
-    url += `&name=${encodeURIComponent(state.search)}`;
-  }
+  let url =
+    `https://rickandmortyapi.com/api/episode?page=${state.page}` +
+    (state.search ? `&name=${encodeURIComponent(state.search)}` : "");
 
   fetch(url)
     .then((response) => response.json())
@@ -118,6 +126,16 @@ function loadEpisodes() {
     });
 }
 
+// Debounced search event listener for episodes
+const searchInput = document.getElementById("search");
+searchInput.addEventListener(
+  "input",
+  debounce(function () {
+    state.search = this.value.trim();
+    state.page = 1;
+    loadEpisodes();
+  }, 300)
+);
 // // Event Listeners
 // document.querySelector("#prev-page").addEventListener("click", () => {
 //   if (state.page > 1) {
