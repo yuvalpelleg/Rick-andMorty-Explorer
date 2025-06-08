@@ -279,3 +279,17 @@ main {
 .main-content {
   color: #fff;
 }
+
+.character-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.character-img img {
+  display: block;
+  margin: 0 auto;
+  max-width: 220px;
+  border-radius: 12px;
+}
