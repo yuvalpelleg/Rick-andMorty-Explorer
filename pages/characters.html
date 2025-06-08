@@ -7,6 +7,14 @@
   </head>
   <link rel="stylesheet" href="/styles/main.css" />
   <body>
+    <nav class="nav">
+      <ul>
+        <a href="/index.html" class="logo-title">RickyWiki</a>
+        <li><a href="pages/characters.html">Characters</a></li>
+        <li><a href="pages/episodes.html">Episodes</a></li>
+        <li><a href="pages/locations.html">Locations</a></li>
+      </ul>
+    </nav>
     <div class="app" id="character-grid">
       <div class="card character-card">
         <div class="img character-img"></div>
@@ -16,6 +24,14 @@
       </div>
     </div>
     <div id="pagination" class="pagination-container"></div>
+    <footer class="footer">
+      <p>
+        &copy; 2025 Rick and Morty Explorer &mdash; Powered by
+        <a href="https://rickandmortyapi.com/" target="_blank"
+          >The Rick and Morty API</a
+        >
+      </p>
+    </footer>
     <script src="/scripts/characters-list.js"></script>
   </body>
 </html>

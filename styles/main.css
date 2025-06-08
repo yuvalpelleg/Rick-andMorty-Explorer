@@ -10,17 +10,23 @@ body {
   height: 100%;
 }
 
+html,
 body {
+  height: 100%;
   min-height: 100vh;
+}
+
+body {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
   flex: 1 0 auto;
 }
 
-.main-footer {
+.footer {
   flex-shrink: 0;
 }
 
@@ -28,7 +34,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   line-height: 1.6;
-  color: #dcd8d8;
+  color: #000000;
   background-color: #f0f0f0;
 }
 
@@ -115,13 +121,13 @@ a {
 }
 
 /* NAVIGATION BAR STYLES */
-.main-nav {
+.nav {
   background: #181c24;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 0;
   margin-bottom: 2rem;
 }
-.main-nav ul {
+.nav ul {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -132,7 +138,7 @@ a {
   height: 64px;
   position: relative;
 }
-.main-nav .logo-title {
+.nav .logo-title {
   font-family: "Segoe UI", "Arial", sans-serif;
   font-size: 1.7rem;
   font-weight: bold;
@@ -145,12 +151,12 @@ a {
   text-shadow: 0 2px 8px #0ff2;
   user-select: none;
 }
-.main-nav li {
+.nav li {
   display: flex;
   align-items: center;
   height: 100%;
 }
-.main-nav a {
+.nav a {
   color: #fff;
   font-weight: 500;
   font-size: 1.08rem;
@@ -159,8 +165,8 @@ a {
   transition: background 0.18s, color 0.18s;
   position: relative;
 }
-.main-nav a:hover,
-.main-nav a:focus {
+.nav a:hover,
+.nav a:focus {
   background: #2b3242;
   color: #6cfbff;
   text-decoration: none;
@@ -185,7 +191,7 @@ main {
 }
 
 /* FOOTER */
-.main-footer {
+.footer {
   background: #181c24;
   color: #b0b8c9;
   text-align: center;
@@ -194,21 +200,21 @@ main {
   margin-top: 3rem;
   border-top: 1px solid #23283a;
 }
-.main-footer a {
+.footer a {
   color: #6cfbff;
   text-decoration: underline;
 }
-.main-footer a:hover {
+.footer a:hover {
   color: #fff;
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .main-nav ul {
+  .nav ul {
     gap: 1rem;
     padding-right: 1rem;
   }
-  .main-nav .logo-title {
+  .nav .logo-title {
     font-size: 1.2rem;
     padding-left: 1rem;
   }
@@ -268,4 +274,8 @@ main {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.main-content {
+  color: #fff;
 }

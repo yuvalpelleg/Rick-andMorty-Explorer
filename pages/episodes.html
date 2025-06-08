@@ -6,6 +6,14 @@
     <link rel="stylesheet" href="../styles/main.css" />
   </head>
   <body>
+    <nav class="nav">
+      <ul>
+        <a href="/index.html" class="logo-title">RickyWiki</a>
+        <li><a href="pages/characters.html">Characters</a></li>
+        <li><a href="pages/episodes.html">Episodes</a></li>
+        <li><a href="pages/locations.html">Locations</a></li>
+      </ul>
+    </nav>
     <h1>Rick and Morty Episodes</h1>
 
     <input type="text" id="search" placeholder="Search for episode..." />
@@ -18,7 +26,14 @@
       <button id="prev-page">Prev</button>
       <button id="next-page">Next</button>
     </div>
-
+    <footer class="footer">
+      <p>
+        &copy; 2025 Rick and Morty Explorer &mdash; Powered by
+        <a href="https://rickandmortyapi.com/" target="_blank"
+          >The Rick and Morty API</a
+        >
+      </p>
+    </footer>
     <script type="module" src="../scripts/episodes-list.js"></script>
   </body>
 </html>
