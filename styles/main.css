@@ -341,3 +341,47 @@ a {
   background: #2b3242;
   box-shadow: 0 4px 18px rgba(108, 251, 255, 0.15);
 }
+
+.mini-video-box {
+  position: fixed;
+  top: 50%; /* Center vertically */
+  right: -555px; /* Hidden by default, adjust for new width */
+  width: 600px; /* Make the box bigger */
+  height: 400px; /* Set a bigger height */
+  transform: translateY(-50%); /* Perfect vertical centering */
+  background: #181c24;
+  border-radius: 12px 0 0 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  transition: right 0.4s cubic-bezier(0.4, 2, 0.6, 1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.mini-video-box.open {
+  right: 2rem; /* Slide in */
+}
+
+.mini-video-box video {
+  width: 540px; /* Make video fit the bigger box */
+  height: 340px;
+  border-radius: 8px;
+  background: #000;
+}
+.video-toggle-btn {
+  background: #6cfbff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #181c24;
+  transition: background 0.2s;
+}
+.video-toggle-btn:hover {
+  background: #3a9cff;
+  color: #fff;
+}

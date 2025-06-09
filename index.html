@@ -27,6 +27,17 @@
         <a href="pages/locations.html" class="section-btn">Location List</a>
       </div>
     </main>
+    <!-- Mini Video Box -->
+    <div id="mini-video-box" class="mini-video-box open">
+      <button id="toggle-video-box" class="video-toggle-btn">&#9654;</button>
+      <video
+        src="./styles/Rick And Morty Intro.mp4"
+        loop
+        autoplay
+        muted
+        disablepictureinpicture
+      ></video>
+    </div>
     <footer class="footer">
       <p>
         &copy; 2025 Rick and Morty Explorer - Powered by
@@ -35,5 +46,16 @@
         >
       </p>
     </footer>
+    <script>
+      const videoBox = document.getElementById("mini-video-box");
+      const toggleBtn = document.getElementById("toggle-video-box");
+      let open = true;
+
+      toggleBtn.addEventListener("click", () => {
+        open = !open;
+        videoBox.classList.toggle("open", open);
+        toggleBtn.innerHTML = open ? "&#10006;" : "&#9654;"; // X or play arrow
+      });
+    </script>
   </body>
 </html>
