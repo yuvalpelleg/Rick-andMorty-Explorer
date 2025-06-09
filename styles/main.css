@@ -268,7 +268,12 @@ a {
   font-size: 1.35rem;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(90deg, #6cfbff 0%, #3a9cff 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(31, 166, 171, 0.5) 0%,
+    rgba(58, 156, 255, 0.4) 100%
+  );
+  backdrop-filter: blur(1px);
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.13);
