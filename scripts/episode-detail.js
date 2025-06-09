@@ -1,121 +1,55 @@
-// /**
-//  * Episode Detail Page Script
-//  * Handles the display of detailed information for a single episode
-//  */
-
-// import { getIdFromUrl } from "./modules/utils";
-
-// /**
-//  * Loads and displays details for a specific episode
-//  * @param {string} id - The episode ID to load
-//  */
-// function loadEpisodeDetails(id) {
-//   // TODO: Implement episode detail loading
-//   // 1. Show loading state
-//   const container = document.querySelector("#episode-detail");
-//   const loader = createLoader();
-//   container.appendChild(loader);
-//   // 2. Fetch episode data using the API module
-
-//   fetch(`https://rickandmortyapi.com/api/episode/${id}`)
-//     .then((res) => {
-//       if (!res.ok) throw new error("Failed to fetch episode");
-//       return res.json();
-//     })
-//     .then((episode) => {
-//       const characterIds = episode.characters.map((url) => getIdFromUrl(url));
-//       const idString = characterIds.join(", ");
-//     });
-//   // 3. Extract character IDs from episode.characters URLs
-//   // 4. Fetch all characters that appear in this episode
-//   // 5. Update UI with episode and character data
-//   // 6. Handle any errors
-//   // 7. Hide loading state
-
-//   throw new Error("loadEpisodeDetails not implemented");
-// }
-
-// /**
-//  * Updates the UI with episode and character data
-//  * @param {Object} episode - The episode data
-//  * @param {Array} characters - Array of character data
-//  */
-// function updateUI(episode, characters) {
-//   // TODO: Implement the UI update
-//   // 1. Get the detail container element
-//   // 2. Create episode header with basic info
-//   // 3. Create characters section
-//   // 4. For each character:
-//   //    - Create a card with image and basic info
-//   //    - Make the card link to the character detail page
-//   // 5. Handle empty states (no characters)
-//   throw new Error("updateUI not implemented");
-// }
-
-// // TODO: Initialize the page
-// // 1. Get episode ID from URL parameters
-// // 2. Validate the ID
-// // 3. Load episode details if ID is valid
-// // 4. Show error if ID is invalid or missing
-
-/**
- * Episode Detail Page Script
- * Handles the display of detailed information for a single episode
- */
-
-// Importing a helper function to get the ID from a URL
 import { getIdFromUrl, createLoader } from "./modules/utils.js";
 
 /**
- * Loads and displays details for a specific episode
+ * Loads and displays details for a specific episode using .then()
  * @param {string} id - The episode ID to load
  */
-async function loadEpisodeDetails(id) {
-  // Get the container where we want to show the episode
+function loadEpisodeDetails(id) {
   const container = document.querySelector("#episode-detail");
 
-  // Show a loading spinner while we wait for data
+  // Show the loader
   const loader = createLoader();
   container.appendChild(loader);
 
-  try {
-    // Fetch the episode data from the API
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/episode/${id}`
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch episode data");
-    }
-    const episode = await response.json(); // Parse the response into JSON
+  // Step 1: Fetch episode data
+  fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch episode data");
+      }
+      return response.json();
+    })
+    .then((episode) => {
+      // Step 2: Get character IDs from the episode
+      const characterIds = episode.characters.map((url) => getIdFromUrl(url));
+      const idString = characterIds.join(",");
 
-    // Get character IDs from episode.characters array (they are URLs)
-    const characterIds = episode.characters.map((url) => getIdFromUrl(url));
-    const idString = characterIds.join(",");
+      // Step 3: Fetch characters using those IDs
+      return fetch(`https://rickandmortyapi.com/api/character/${idString}`)
+        .then((charResponse) => {
+          if (!charResponse.ok) {
+            throw new Error("Failed to fetch characters");
+          }
+          return charResponse.json();
+        })
+        .then((charactersData) => {
+          // Normalize character data to array if it's a single object
+          const characters = Array.isArray(charactersData)
+            ? charactersData
+            : [charactersData];
 
-    // Now fetch the characters that appear in this episode
-    const charResponse = await fetch(
-      `https://rickandmortyapi.com/api/character/${idString}`
-    );
-    if (!charResponse.ok) {
-      throw new Error("Failed to fetch characters for this episode");
-    }
-
-    // If only one character, the API returns an object, not an array
-    let characters = await charResponse.json();
-    if (!Array.isArray(characters)) {
-      characters = [characters];
-    }
-
-    // Everything is ready, so update the UI
-    updateUI(episode, characters);
-  } catch (error) {
-    // If there's an error, show it on the page
-    container.innerHTML = `<p class="error">Error loading episode details. Please try again later.</p>`;
-    console.error(error); // Also log it for debugging
-  } finally {
-    // Remove the loading spinner no matter what happens
-    loader.remove();
-  }
+          // Step 4: Update the UI with both episode and characters
+          updateUI(episode, characters);
+        });
+    })
+    .catch((error) => {
+      container.innerHTML =
+        '<p class="error">Error loading episode details. Please try again later.</p>';
+      console.error(error);
+    })
+    .finally(() => {
+      loader.remove();
+    });
 }
 
 /**
@@ -124,15 +58,12 @@ async function loadEpisodeDetails(id) {
  * @param {Array} characters - Array of character data
  */
 function updateUI(episode, characters) {
-  // Get the container where we want to show the episode info
   const container = document.querySelector("#episode-detail");
-  container.innerHTML = ""; // Clear any old content
+  container.innerHTML = "";
 
-  // 2. Create episode header with basic info
   const header = document.createElement("div");
   header.className = "episode-header";
 
-  // Add episode name, air date, and code
   const title = document.createElement("h2");
   title.textContent = episode.name;
 
@@ -142,23 +73,17 @@ function updateUI(episode, characters) {
   const code = document.createElement("p");
   code.textContent = `Episode Code: ${episode.episode}`;
 
-  // Append all to the header
   header.append(title, airDate, code);
   container.append(header);
 
-  // 3. Create characters section
   const sectionTitle = document.createElement("h3");
   sectionTitle.textContent = "Characters in this episode";
   container.append(sectionTitle);
 
-  // Use a horizontal scroll bar for characters, like in character details
   const scrollBar = document.createElement("div");
   scrollBar.className = "episodes-scroll-bar";
 
-  // 4. For each character:
   characters.forEach((char) => {
-    //    - Create a card with image and basic info
-    //    - Make the card link to the character detail page
     const card = document.createElement("a");
     card.className = "card character-card";
     card.href = `character-detail.html?id=${char.id}`;
@@ -180,19 +105,15 @@ function updateUI(episode, characters) {
     scrollBar.appendChild(card);
   });
 
-  // Add the scroll bar to the page
   container.append(scrollBar);
 }
 
-// Initialize the page
 const params = new URLSearchParams(window.location.search);
 const episodeId = params.get("id");
 
-// Check if we have an ID in the URL
 if (episodeId && !isNaN(episodeId)) {
-  loadEpisodeDetails(episodeId); // If valid, load the episode
+  loadEpisodeDetails(episodeId);
 } else {
-  // If not valid, show an error
   const container = document.querySelector("#episode-detail");
   container.innerHTML = `<p class="error">Invalid episode ID.</p>`;
 }
