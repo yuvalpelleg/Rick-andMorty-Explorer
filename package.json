@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/yuvalpelleg/Rick-andMorty-Explorer/issues"
   },
-  "homepage": "https://github.com/yuvalpelleg/Rick-andMorty-Explorer#readme"
+  "homepage": "https://github.com/yuvalpelleg/Rick-andMorty-Explorer#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
