@@ -1,0 +1,22 @@
+{
+  "name": "rick-andmorty-explorer",
+  "version": "1.0.0",
+  "description": "Create a web application that displays information about the Rick and Morty TV show using the [Rick and Morty API](https://rickandmortyapi.com/). The application will show characters, locations, and episodes from the show, with detailed views for each.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuvalpelleg/Rick-andMorty-Explorer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuvalpelleg/Rick-andMorty-Explorer/issues"
+  },
+  "homepage": "https://github.com/yuvalpelleg/Rick-andMorty-Explorer#readme"
+}
